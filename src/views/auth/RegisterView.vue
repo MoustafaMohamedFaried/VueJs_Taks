@@ -40,7 +40,6 @@ export default {
                 email: '',
                 password: '',
             },
-            token: "",
         };
     },
     methods: {
@@ -49,24 +48,34 @@ export default {
         },
         handleRegister() {
             axios
-                .post("http://localhost:8000/api/register", this.user)
+                .post(
+                    "http://localhost:8000/api/register",
+                    this.user, // Request body containing user data
+                    {
+                        headers: {
+                            'x-api-key': 'kdsldnsjdnsjkndjksndjFaJ0kfG9m8sW08yTXiC0tPmsN6964',
+                        },
+                    }
+                )
                 .then((response) => {
                     // Access the token from response.data.data.access_token
-                    localStorage.setItem('authToken', response.data.data.access_token);
-                    
-                    this.token = response.data.data.access_token;
-
-                    // Redirect to the home page
-                    this.$router.push('/');
+                    localStorage.setItem("authToken", response.data.data.access_token);
 
                     // Show success notification
-                    this.showNotifi("success", response.data.message, "success");
+                    this.showNotifi("Success", response.data.message, "success");
+
+                    // Redirect to the home page
+                    this.$router.push("/");
                 })
                 .catch((error) => {
                     console.error(error);
 
                     // Show error notification
-                    this.showNotifi("Error", "Failed to create user", "error");
+                    if (error.response && error.response.data.message) {
+                        this.showNotifi("Error", response.data.message, "error");
+                    } else {
+                        this.showNotifi("Error", "Failed to create user", "error");
+                    }
                 });
         },
         handleLogin() {

@@ -8,7 +8,7 @@
 <style lang="scss"></style>
 
 <script>
-import NavbarView from '@/views/components/NavbarView.vue';
+import NavbarView from '@/components/NavbarView.vue';
 
 export default {
   components: { // Add the missing colon here

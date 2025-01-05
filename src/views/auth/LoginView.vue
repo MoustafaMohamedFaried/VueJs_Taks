@@ -4,12 +4,12 @@
         <form @submit.prevent="handleLogin" class="login-form">
             <div class="mb-3">
                 <label for="email" class="form-label">Email</label>
-                <input type="email" id="email" class="form-control" v-model="email" placeholder="Enter your email"
+                <input type="email" id="email" class="form-control" v-model="user.email" placeholder="Enter your email"
                     required />
             </div>
             <div class="mb-3">
                 <label for="password" class="form-label">Password</label>
-                <input type="password" id="password" class="form-control" v-model="password"
+                <input type="password" id="password" class="form-control" v-model="user.password"
                     placeholder="Enter your password" required />
             </div>
             <div class="d-flex justify-content-between align-items-center">
@@ -31,9 +31,10 @@ import axios from "axios";
 export default {
     data() {
         return {
-            email: '',
-            password: '',
-            token: '',
+            user:{
+                email: '',
+                password: '',
+            }
         };
     },
     methods: {
@@ -41,15 +42,36 @@ export default {
             Swal.fire(title, text, icon);
         },
         handleLogin() {
-            // Example: Add your authentication logic here
-            if (this.email && this.password) {
-                console.log('Logging in with:', this.email, this.password);
-                // Replace with API call
-                localStorage.setItem('authToken', 'dummyToken'); // Simulating login
-                this.$router.push('/dashboard'); // Redirect after login
-            } else {
-                alert('Please fill in all fields');
-            }
+            axios
+                .post(
+                    "http://localhost:8000/api/login",
+                    this.user, // Request body containing user data
+                    {
+                        headers: {
+                            'x-api-key': 'kdsldnsjdnsjkndjksndjFaJ0kfG9m8sW08yTXiC0tPmsN6964',
+                        },
+                    }
+                )
+                .then((response) => {
+                    // Access the token from response.data.data.access_token
+                    localStorage.setItem("authToken", response.data.data.access_token);
+
+                    // Show success notification
+                    this.showNotifi("Success", response.data.message, "success");
+
+                    // Redirect to the home page
+                    this.$router.push("/");
+                })
+                .catch((error) => {
+                    console.error(error);
+
+                    // Show error notification
+                    if (error.response && error.response.data.message) {
+                        this.showNotifi("Error", error.response.data.message, "error");
+                    } else {
+                        this.showNotifi("Error", "Failed to create user", "error");
+                    }
+                });
         },
         handleRegister() {
             // Redirect to the registration page

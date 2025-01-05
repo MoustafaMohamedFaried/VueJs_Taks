@@ -138,6 +138,7 @@ export default {
       users: [],
       newUser: { name: "", email: "", password: "" },
       currentUser: { id: null, name: "", email: "", password: "" },
+      authToken: localStorage.getItem("authToken")
     };
   },
 
@@ -146,20 +147,31 @@ export default {
       Swal.fire(title, text, icon);
     },
     fetchUsers() {
+      // Retrieve the token from localStorage
       axios
-        .get("http://localhost:8000/api/users")
+        .get("http://localhost:8000/api/users", {
+          headers: {
+            'x-api-key': 'kdsldnsjdnsjkndjksndjFaJ0kfG9m8sW08yTXiC0tPmsN6964',
+            'Authorization': `Bearer ${this.authToken}` // Use the token dynamically
+          }
+        })
         .then((response) => {
           this.users = response.data.data;
         })
         .catch((error) => {
           console.log(error);
 
-          this.showNotifi("Error", "Faild to fetch users", "error");
+          this.showNotifi("Error", "Failed to fetch users", "error");
         });
     },
     createUser() {
       axios
-        .post("http://localhost:8000/api/users", this.newUser)
+        .post("http://localhost:8000/api/users", this.newUser, {
+          headers: {
+            'x-api-key': 'kdsldnsjdnsjkndjksndjFaJ0kfG9m8sW08yTXiC0tPmsN6964',
+            'Authorization': `Bearer ${this.authToken}` // Use the token dynamically
+          }
+        })
         .then((response) => {
           const closeCreateModalBtn = document.getElementById(
             "closeCreateModalBtn"
@@ -194,7 +206,12 @@ export default {
       }).then((result) => {
         if (result.isConfirmed) {
           axios
-            .delete(`http://localhost:8000/api/users/${userId}`)
+            .delete(`http://localhost:8000/api/users/${userId}`, {
+              headers: {
+                'x-api-key': 'kdsldnsjdnsjkndjksndjFaJ0kfG9m8sW08yTXiC0tPmsN6964',
+                'Authorization': `Bearer ${this.authToken}` // Use the token dynamically
+              }
+            })
             .then(() => {
               this.fetchUsers(); // Refresh the users list
 
@@ -214,7 +231,12 @@ export default {
     },
     showUser(userId) {
       axios
-        .get(`http://localhost:8000/api/users/${userId}`)
+        .get(`http://localhost:8000/api/users/${userId}`, {
+          headers: {
+            'x-api-key': 'kdsldnsjdnsjkndjksndjFaJ0kfG9m8sW08yTXiC0tPmsN6964',
+            'Authorization': `Bearer ${this.authToken}` // Use the token dynamically
+          }
+        })
         .then((response) => {
           this.currentUser = response.data.data;
         })
@@ -228,8 +250,12 @@ export default {
       axios
         .put(
           `http://localhost:8000/api/users/${this.currentUser.id}`,
-          this.currentUser
-        )
+          this.currentUser, {
+          headers: {
+            'x-api-key': 'kdsldnsjdnsjkndjksndjFaJ0kfG9m8sW08yTXiC0tPmsN6964',
+            'Authorization': `Bearer ${this.authToken}` // Use the token dynamically
+          }
+        })
         .then((response) => {
           // Update the user in the local list after successful update
           const userIndex = this.users.findIndex(
