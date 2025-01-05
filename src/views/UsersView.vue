@@ -1,19 +1,12 @@
 <template>
-  <div class="container mt-5">
+  <div class="mt-5">
     <!-- Button to Open Modal -->
-    <button
-      type="button"
-      class="btn btn-primary"
-      data-bs-toggle="modal"
-      data-bs-target="#createUserModal"
-    >
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createUserModal">
       Add user
     </button>
 
     <!-- Table -->
-    <table
-      class="table table-striped table-hover table-bordered mt-4 text-center"
-    >
+    <table class="table table-striped table-hover table-bordered mt-4 text-center">
       <thead>
         <tr>
           <th scope="col">#</th>
@@ -28,17 +21,9 @@
           <td>{{ user.name }}</td>
           <td>{{ user.email }}</td>
           <td>
-            <button
-              class="btn btn-info"
-              data-bs-toggle="modal"
-              data-bs-target="#editUserModal"
-              @click.prevent="showUser(user.id)"
-            >
-              Edit</button
-            ><button
-              class="btn btn-danger"
-              @click.prevent="deleteUser(user.id)"
-            >
+            <button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#editUserModal"
+              @click.prevent="showUser(user.id)">
+              Edit</button><button class="btn btn-danger" @click.prevent="deleteUser(user.id)">
               Delete
             </button>
           </td>
@@ -47,69 +32,37 @@
     </table>
 
     <!-- create user modal -->
-    <div
-      class="modal fade"
-      id="createUserModal"
-      tabindex="-1"
-      aria-labelledby="createUserModalLabel"
-      aria-hidden="true"
-    >
+    <div class="modal fade" id="createUserModal" tabindex="-1" aria-labelledby="createUserModalLabel"
+      aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="createUserModalLabel">
               Create user form
             </h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-              id="closeCreateModalBtn"
-            ></button>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+              id="closeCreateModalBtn"></button>
           </div>
           <div class="modal-body">
             <form action="" @submit.prevent="createUser">
               <div class="mb-3">
                 <label for="name" class="form-label">Username</label>
-                <input
-                  v-model="newUser.name"
-                  type="text"
-                  class="form-control"
-                  id="name"
-                  required
-                />
+                <input v-model="newUser.name" type="text" class="form-control" id="name" required />
               </div>
 
               <div class="mb-3">
                 <label for="email" class="form-label">Email address</label>
-                <input
-                  v-model="newUser.email"
-                  type="email"
-                  class="form-control"
-                  id="email"
-                  required
-                />
+                <input v-model="newUser.email" type="email" class="form-control" id="email" required />
               </div>
 
               <div class="mb-3">
                 <label for="password" class="form-label">Password</label>
-                <input
-                  v-model="newUser.password"
-                  type="password"
-                  class="form-control"
-                  id="password"
-                  required
-                />
+                <input v-model="newUser.password" type="password" class="form-control" id="password" required />
               </div>
 
               <div class="d-flex justify-content-start p-1">
                 <button type="submit" class="btn btn-primary">Submit</button>
-                <button
-                  type="button"
-                  class="btn btn-success"
-                  data-bs-dismiss="modal"
-                >
+                <button type="button" class="btn btn-success" data-bs-dismiss="modal">
                   Close
                 </button>
               </div>
@@ -131,68 +84,36 @@
     <!-- /create user modal -->
 
     <!-- edit user modal -->
-    <div
-      class="modal fade"
-      id="editUserModal"
-      tabindex="-1"
-      aria-labelledby="editUserModalLabel"
-      aria-hidden="true"
-    >
+    <div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUserModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="editUserModalLabel">Edit user form</h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-              id="closeEditModalBtn"
-            ></button>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+              id="closeEditModalBtn"></button>
           </div>
           <div class="modal-body">
             <form action="" @submit.prevent="updateUser">
               <div class="mb-3">
                 <label for="name" class="form-label">Username</label>
-                <input
-                  v-model="currentUser.name"
-                  type="text"
-                  class="form-control"
-                  id="name"
-                  required
-                />
+                <input v-model="currentUser.name" type="text" class="form-control" id="name" required />
               </div>
 
               <div class="mb-3">
                 <label for="email" class="form-label">Email address</label>
-                <input
-                  v-model="currentUser.email"
-                  type="email"
-                  class="form-control"
-                  id="email"
-                  required
-                />
+                <input v-model="currentUser.email" type="email" class="form-control" id="email" required />
               </div>
 
               <div class="mb-3">
                 <label for="password" class="form-label">Password</label>
-                <input
-                  v-model="currentUser.password"
-                  type="password"
-                  class="form-control"
-                  id="password"
-                />
+                <input v-model="currentUser.password" type="password" class="form-control" id="password" />
               </div>
 
               <div class="d-flex justify-content-start p-1">
                 <button type="submit" class="btn btn-primary">
                   Save Changes
                 </button>
-                <button
-                  type="button"
-                  class="btn btn-secondary"
-                  data-bs-dismiss="modal"
-                >
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                   Close
                 </button>
               </div>
