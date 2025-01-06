@@ -127,10 +127,6 @@
 </template>
 
 <script>
-import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap/dist/js/bootstrap.bundle.min.js";
-import Swal from "sweetalert2";
-import axios from "axios";
 
 export default {
   data() {
@@ -138,17 +134,18 @@ export default {
       users: [],
       newUser: { name: "", email: "", password: "" },
       currentUser: { id: null, name: "", email: "", password: "" },
-      authToken: localStorage.getItem("authToken")
+      // authToken: localStorage.getItem("authToken")
+      authToken: this.$cookies.get("authToken")
     };
   },
 
   methods: {
     showNotifi(title, text, icon) {
-      Swal.fire(title, text, icon);
+      this.$swal.fire(title, text, icon);
     },
     fetchUsers() {
       // Retrieve the token from localStorage
-      axios
+      this.$axios
         .get("http://localhost:8000/api/users", {
           headers: {
             'x-api-key': 'kdsldnsjdnsjkndjksndjFaJ0kfG9m8sW08yTXiC0tPmsN6964',
@@ -165,7 +162,7 @@ export default {
         });
     },
     createUser() {
-      axios
+      this.$axios
         .post("http://localhost:8000/api/users", this.newUser, {
           headers: {
             'x-api-key': 'kdsldnsjdnsjkndjksndjFaJ0kfG9m8sW08yTXiC0tPmsN6964',
@@ -194,7 +191,7 @@ export default {
         });
     },
     deleteUser(userId) {
-      Swal.fire({
+      this.$swal.fire({
         title: "Are you sure?",
         text: "This action cannot be undone!",
         icon: "warning",
@@ -205,7 +202,7 @@ export default {
         cancelButtonText: "Cancel",
       }).then((result) => {
         if (result.isConfirmed) {
-          axios
+          this.$axios
             .delete(`http://localhost:8000/api/users/${userId}`, {
               headers: {
                 'x-api-key': 'kdsldnsjdnsjkndjksndjFaJ0kfG9m8sW08yTXiC0tPmsN6964',
@@ -230,7 +227,7 @@ export default {
       });
     },
     showUser(userId) {
-      axios
+      this.$axios
         .get(`http://localhost:8000/api/users/${userId}`, {
           headers: {
             'x-api-key': 'kdsldnsjdnsjkndjksndjFaJ0kfG9m8sW08yTXiC0tPmsN6964',
@@ -247,7 +244,7 @@ export default {
         });
     },
     updateUser() {
-      axios
+      this.$axios
         .put(
           `http://localhost:8000/api/users/${this.currentUser.id}`,
           this.currentUser, {

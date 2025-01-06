@@ -2,6 +2,7 @@ import { createRouter, createWebHashHistory } from "vue-router";
 import UsersView from "@/views/UsersView.vue";
 import LoginView from "@/views/auth/LoginView.vue";
 import RegisterView from "@/views/auth/RegisterView.vue";
+import Cookies from "js-cookie";
 
 const routes = [
   {
@@ -31,7 +32,8 @@ const router = createRouter({
 
 // Navigation guard to check authentication
 router.beforeEach((to, from, next) => {
-  const isAuthenticated = !!localStorage.getItem("authToken"); // Check if authToken exists (boolean)
+  // const isAuthenticated = !!localStorage.getItem("authToken"); // Check if authToken exists (boolean)
+  const isAuthenticated = !!Cookies.get("authToken"); // Check if authToken exists (boolean)
 
   if (to.meta.requiresAuth && !isAuthenticated) {
     // If the route requires authentication and the user is not authenticated

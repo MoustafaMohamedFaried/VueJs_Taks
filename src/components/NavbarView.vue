@@ -33,7 +33,8 @@ export default {
     data() {
         return {
             isAuth: false, // Default is not authenticated
-            authToken: localStorage.getItem("authToken")
+            // authToken: localStorage.getItem("authToken")
+            authToken: this.$cookies.get("authToken")
         };
     },
     methods: {
@@ -50,7 +51,10 @@ export default {
         },
         handleLogout() {
             // Remove auth token and update isAuth status
-            localStorage.removeItem("authToken");
+            // localStorage.removeItem("authToken");
+
+            this.$cookies.remove("authToken", { path: "/" });
+
             this.isAuth = false;
             this.$router.push('/login'); // Optionally redirect to home
         },

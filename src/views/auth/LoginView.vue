@@ -23,15 +23,10 @@
 </template>
 
 <script>
-import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap/dist/js/bootstrap.bundle.min.js";
-import Swal from "sweetalert2";
-import axios from "axios";
-
 export default {
     data() {
         return {
-            user:{
+            user: {
                 email: '',
                 password: '',
             }
@@ -39,10 +34,10 @@ export default {
     },
     methods: {
         showNotifi(title, text, icon) {
-            Swal.fire(title, text, icon);
+            this.$swal.fire(title, text, icon);  // Use the globally provided Swal
         },
         handleLogin() {
-            axios
+            this.$axios
                 .post(
                     "http://localhost:8000/api/login",
                     this.user, // Request body containing user data
@@ -54,7 +49,13 @@ export default {
                 )
                 .then((response) => {
                     // Access the token from response.data.data.access_token
-                    localStorage.setItem("authToken", response.data.data.access_token);
+                    // localStorage.setItem("authToken", response.data.data.access_token);
+
+                    this.$cookies.set("authToken", response.data.data.access_token, {
+                        expires: 7, // Cookie will expire in 7 days
+                        secure: true,
+                        sameSite: "Strict",
+                    });
 
                     // Show success notification
                     this.showNotifi("Success", response.data.message, "success");

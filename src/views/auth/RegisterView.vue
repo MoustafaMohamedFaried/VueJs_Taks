@@ -27,11 +27,6 @@
 </template>
 
 <script>
-import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap/dist/js/bootstrap.bundle.min.js";
-import Swal from "sweetalert2";
-import axios from "axios";
-
 export default {
     data() {
         return {
@@ -44,10 +39,10 @@ export default {
     },
     methods: {
         showNotifi(title, text, icon) {
-            Swal.fire(title, text, icon);
+            this.$swal.fire(title, text, icon); // Use the globally provided Swal
         },
         handleRegister() {
-            axios
+            this.$axios
                 .post(
                     "http://localhost:8000/api/register",
                     this.user, // Request body containing user data
@@ -59,7 +54,14 @@ export default {
                 )
                 .then((response) => {
                     // Access the token from response.data.data.access_token
-                    localStorage.setItem("authToken", response.data.data.access_token);
+                    // localStorage.setItem("authToken", response.data.data.access_token);
+
+                    // Store the token in cookies
+                    this.$cookies.set("authToken", response.data.data.access_token, {
+                        expires: 7, // Cookie will expire in 7 days
+                        secure: true,
+                        sameSite: "Strict",
+                    });
 
                     // Show success notification
                     this.showNotifi("Success", response.data.message, "success");
@@ -72,14 +74,14 @@ export default {
 
                     // Show error notification
                     if (error.response && error.response.data.message) {
-                        this.showNotifi("Error", response.data.message, "error");
+                        this.showNotifi("Error", error.response.data.message, "error");
                     } else {
                         this.showNotifi("Error", "Failed to create user", "error");
                     }
                 });
         },
         handleLogin() {
-            // Redirect to the registration page
+            // Redirect to the login page
             this.$router.push('/login');
         },
     },
