@@ -27,7 +27,7 @@
                     <div v-if="isAuth" class="dropdown">
                         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
                             data-bs-toggle="dropdown" aria-expanded="false">
-                            <!-- {{ username }} --> Moustafa
+                            {{ username }} 
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                             <li>
@@ -49,7 +49,8 @@ export default {
         return {
             isAuth: false, // Default is not authenticated
             // authToken: this.$cookies.get("authToken")
-            authToken: this.$authToken
+            authToken: this.$authToken,
+            username: this.$userName,
         };
     },
     methods: {
@@ -60,7 +61,7 @@ export default {
             // Remove auth token and update isAuth status
             // localStorage.removeItem("authToken");
 
-            this.$cookies.remove("authToken", { path: "/" });
+            this.$cookies.remove("userData", { path: "/" });
 
             this.isAuth = false;
             this.$router.push('/login'); // Optionally redirect to home

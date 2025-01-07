@@ -49,10 +49,19 @@ export default {
                     }
                 )
                 .then((response) => {
-                    // Access the token from response.data.data.access_token
-                    // localStorage.setItem("authToken", response.data.data.access_token);
+                    // Access the token and user info from response.data.data
+                    const { access_token, user } = response.data.data;
 
-                    this.$cookies.set("authToken", response.data.data.access_token, {
+                    // Create the user data object
+                    const userData = {
+                        name: user.name,
+                        id: user.id,
+                        email: user.email,
+                        access_token: access_token,
+                    };
+
+                    // Store the userData in cookies
+                    this.$cookies.set("userData", JSON.stringify(userData), {
                         expires: 7, // Cookie will expire in 7 days
                         secure: true,
                         sameSite: "Strict",

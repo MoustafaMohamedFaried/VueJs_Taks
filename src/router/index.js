@@ -39,17 +39,25 @@ const router = createRouter({
 
 // Navigation guard to check authentication
 router.beforeEach((to, from, next) => {
-  // const isAuthenticated = !!localStorage.getItem("authToken"); // Check if authToken exists (boolean)
-  const isAuthenticated = !!Cookies.get("authToken"); // Check if authToken exists (boolean)
+  // Safely check if the cookie exists before trying to parse it
+  const userData = Cookies.get("userData");
+
+  let isAuthenticated = false;
+  if (userData) {
+    try {
+      const parsedData = JSON.parse(userData);
+      isAuthenticated = !!parsedData.access_token; // Check if access_token exists
+    } catch (e) {
+      console.error("Error parsing userData:", e); // Log the error for debugging
+      isAuthenticated = false;
+    }
+  }
 
   if (to.meta.requiresAuth && !isAuthenticated) {
-    // If the route requires authentication and the user is not authenticated
     next("/login"); // Redirect to login page
   } else if (to.meta.requiresGuest && isAuthenticated) {
-    // If the route is for guests only (e.g., login/register) and the user is authenticated
     next("/"); // Redirect to home page
   } else {
-    // Allow navigation
     next();
   }
 });

@@ -1,4 +1,3 @@
-// main.js
 import { createApp } from 'vue';
 import App from './App.vue';
 import router from './router';
@@ -23,8 +22,12 @@ const app = createApp(App);
 app.config.globalProperties.$swal = Swal;
 app.config.globalProperties.$axios = axios;
 app.config.globalProperties.$cookies = Cookies;
-app.config.globalProperties.$cookies = Cookies;
-app.config.globalProperties.$authToken = Cookies.get("authToken");
+
+// Check if the "userData" cookie exists before parsing it
+const userData = Cookies.get("userData");
+app.config.globalProperties.$authToken = userData ? JSON.parse(userData)?.access_token : null;
+app.config.globalProperties.$userName = userData ? JSON.parse(userData)?.name : null;
+
 app.config.globalProperties.$apiKey = 'kdsldnsjdnsjkndjksndjFaJ0kfG9m8sW08yTXiC0tPmsN6964';
 
 // Use the router
