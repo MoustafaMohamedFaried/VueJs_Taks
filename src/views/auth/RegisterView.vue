@@ -35,6 +35,7 @@ export default {
                 email: '',
                 password: '',
             },
+            apiKey: this.$apiKey
         };
     },
     methods: {
@@ -48,7 +49,7 @@ export default {
                     this.user, // Request body containing user data
                     {
                         headers: {
-                            'x-api-key': 'kdsldnsjdnsjkndjksndjFaJ0kfG9m8sW08yTXiC0tPmsN6964',
+                            'x-api-key': `${this.apiKey}`,
                         },
                     }
                 )

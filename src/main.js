@@ -23,6 +23,9 @@ const app = createApp(App);
 app.config.globalProperties.$swal = Swal;
 app.config.globalProperties.$axios = axios;
 app.config.globalProperties.$cookies = Cookies;
+app.config.globalProperties.$cookies = Cookies;
+app.config.globalProperties.$authToken = Cookies.get("authToken");
+app.config.globalProperties.$apiKey = 'kdsldnsjdnsjkndjksndjFaJ0kfG9m8sW08yTXiC0tPmsN6964';
 
 // Use the router
 app.use(router);

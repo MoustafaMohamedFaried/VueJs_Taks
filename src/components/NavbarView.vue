@@ -7,21 +7,36 @@
             </button>
             <div class="collapse navbar-collapse container" id="navbarNavAltMarkup">
                 <div class="navbar-nav me-auto">
-                    <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    <a class="nav-link active" aria-current="page" href="#"
+                        @click.prevent="this.$router.push('/')">Users</a>
+                    <a class="nav-link active" aria-current="page" href="#"
+                        @click.prevent="this.$router.push('/posts')">Posts</a>
                 </div>
                 <div class="d-flex">
                     <!-- Conditionally render login and register buttons -->
-                    <button v-if="!isAuth" class="btn btn-primary me-2" @click.prevent="handleLogin" type="button">
+                    <button v-if="!isAuth" class="btn btn-primary me-2" @click.prevent="this.$router.push('/login')"
+                        type="button">
                         Login
                     </button>
-                    <button v-if="!isAuth" class="btn btn-secondary me-2" @click.prevent="handleRegister" type="button">
+                    <button v-if="!isAuth" class="btn btn-secondary me-2"
+                        @click.prevent="this.$router.push('/register')" type="button">
                         Register
                     </button>
 
-                    <!-- Conditionally render logout button -->
-                    <button v-if="isAuth" class="btn btn-danger" @click.prevent="handleLogout" type="button">
-                        Logout
-                    </button>
+                    <!-- Conditionally render the user dropdown when authenticated -->
+                    <div v-if="isAuth" class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <!-- {{ username }} --> Moustafa
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <li>
+                                <button class="dropdown-item" @click.prevent="handleLogout">
+                                    Logout
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
@@ -33,21 +48,13 @@ export default {
     data() {
         return {
             isAuth: false, // Default is not authenticated
-            // authToken: localStorage.getItem("authToken")
-            authToken: this.$cookies.get("authToken")
+            // authToken: this.$cookies.get("authToken")
+            authToken: this.$authToken
         };
     },
     methods: {
         checkAuthStatus() {
             this.isAuth = !!this.authToken; // Set isAuth to true if authToken exists, otherwise false
-        },
-        handleLogin() {
-            // Redirect to the login page
-            this.$router.push('/login');
-        },
-        handleRegister() {
-            // Redirect to the registration page
-            this.$router.push('/register');
         },
         handleLogout() {
             // Remove auth token and update isAuth status

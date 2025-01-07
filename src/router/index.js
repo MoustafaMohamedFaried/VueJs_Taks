@@ -1,4 +1,5 @@
 import { createRouter, createWebHashHistory } from "vue-router";
+import PostsView from "@/views/PostsView.vue";
 import UsersView from "@/views/UsersView.vue";
 import LoginView from "@/views/auth/LoginView.vue";
 import RegisterView from "@/views/auth/RegisterView.vue";
@@ -9,6 +10,12 @@ const routes = [
     path: "/",
     name: "users",
     component: UsersView,
+    meta: { requiresAuth: true }, // Only accessible when authenticated
+  },
+  {
+    path: "/posts",
+    name: "posts",
+    component: PostsView,
     meta: { requiresAuth: true }, // Only accessible when authenticated
   },
   {
