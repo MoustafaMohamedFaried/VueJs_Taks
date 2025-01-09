@@ -42,7 +42,7 @@
               </button>
 
               <!-- Delete Button -->
-              <button class="btn btn-danger">
+              <button class="btn btn-danger" @click.prevent="deletePost(post.id)">
                 Delete
               </button>
             </div>
