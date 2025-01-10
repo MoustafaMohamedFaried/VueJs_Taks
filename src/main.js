@@ -30,6 +30,14 @@ app.config.globalProperties.$userName = userData ? JSON.parse(userData)?.name : 
 
 app.config.globalProperties.$apiKey = 'kdsldnsjdnsjkndjksndjFaJ0kfG9m8sW08yTXiC0tPmsN6964';
 
+// Define the decodeToken function
+app.config.globalProperties.$decodeToken = function (token) {
+   const parts = token.split('.');
+   const payload = parts[1];
+   const decoded = JSON.parse(atob(payload.replace(/_/g, '/').replace(/-/g, '+')));
+   return decoded;
+};
+
 // Use the router
 app.use(router);
 

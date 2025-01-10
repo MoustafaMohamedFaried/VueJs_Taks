@@ -7,10 +7,12 @@
             </button>
             <div class="collapse navbar-collapse container" id="navbarNavAltMarkup">
                 <div class="navbar-nav me-auto">
+                    <!-- <a class="nav-link active" aria-current="page" href="#"
+                        @click.prevent="this.$router.push('/')">Users</a> -->
+                    <!-- <a class="nav-link active" aria-current="page" href="#"
+                        @click.prevent="this.$router.push('/posts')">Posts</a> -->
                     <a class="nav-link active" aria-current="page" href="#"
-                        @click.prevent="this.$router.push('/')">Users</a>
-                    <a class="nav-link active" aria-current="page" href="#"
-                        @click.prevent="this.$router.push('/posts')">Posts</a>
+                        @click.prevent="this.$router.push('/uploads')">Uploads</a>
                 </div>
                 <div class="d-flex">
                     <!-- Conditionally render login and register buttons -->

@@ -49,8 +49,11 @@ export default {
                     }
                 )
                 .then((response) => {
-                    // Access the token and user info from response.data.data
-                    const { access_token, user } = response.data.data;
+                    const access_token = response.data.data;
+                    console.log(access_token);
+
+                    const user = this.$decodeToken(access_token).user;
+                    console.log(user);
 
                     // Create the user data object
                     const userData = {
@@ -71,7 +74,7 @@ export default {
                     this.showNotifi("Success", response.data.message, "success");
 
                     // Redirect to the home page
-                    this.$router.push("/");
+                    this.$router.push("/uploads");
                 })
                 .catch((error) => {
                     console.error(error);

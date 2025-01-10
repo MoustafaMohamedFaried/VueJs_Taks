@@ -55,28 +55,30 @@ export default {
                 )
                 .then((response) => {
                     // Access the token and user info from response.data.data
-                    const { access_token, user } = response.data.data;
+                    // const { access_token, user } = response.data.data;
 
-                    // Create the user data object
-                    const userData = {
-                        name: user.name,
-                        id: user.id,
-                        email: user.email,
-                        access_token: access_token,
-                    };
+                    // // Create the user data object
+                    // const userData = {
+                    //     name: user.name,
+                    //     id: user.id,
+                    //     email: user.email,
+                    //     access_token: access_token,
+                    // };
 
-                    // Store the userData in cookies
-                    this.$cookies.set("userData", JSON.stringify(userData), {
-                        expires: 7, // Cookie will expire in 7 days
-                        secure: true,
-                        sameSite: "Strict",
-                    });
+                    // // Store the userData in cookies
+                    // this.$cookies.set("userData", JSON.stringify(userData), {
+                    //     expires: 7, // Cookie will expire in 7 days
+                    //     secure: true,
+                    //     sameSite: "Strict",
+                    // });
 
-                    // Show success notification
-                    this.showNotifi("Success", response.data.message, "success");
+                    // // Show success notification
+                    // this.showNotifi("Success", response.data.message, "success");
 
-                    // Redirect to the home page
-                    this.$router.push("/");
+                    // // Redirect to the home page
+                    // this.$router.push("/");
+
+                    this.$router.push("/login");
                 })
                 .catch((error) => {
                     console.error(error);
