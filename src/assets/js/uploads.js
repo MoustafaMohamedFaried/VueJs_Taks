@@ -34,7 +34,9 @@ export default {
             .then((response) => {
                // console.log(response.data.data);
 
-               this.images = response.data.data;
+               this.images = response.data.data.map((path) => `http://localhost:8001${path}`);
+
+               console.log(this.images);
             })
             .catch((error) => {
                console.error("Failed to fetch posts:", error);
@@ -58,8 +60,10 @@ export default {
                const closeCreateModalBtn = document.getElementById(
                   "closeCreateModalBtn"
                );
-               
-               this.images.push(response.data.data);
+
+               const imagePath = `http://localhost:8001${response.data.data.path}`
+
+               this.images.push(imagePath);
 
                this.newImage.image = "";
 
@@ -69,7 +73,7 @@ export default {
             })
             .catch((error) => {
                console.log(error);
-               
+
                if (error.response) {
                   console.log("Server Response:", error.response.data); // Log server errors
                }
